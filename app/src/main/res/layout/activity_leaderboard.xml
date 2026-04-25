@@ -50,9 +50,9 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="#A6FFFFFF"
+                app:cardBackgroundColor="#D9FFFFFF"
                 app:cardCornerRadius="24dp"
-                app:cardElevation="8dp">
+                app:cardElevation="10dp">
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -105,25 +105,39 @@
                         android:textColor="#333333"
                         android:layout_marginBottom="12dp"/>
 
-                    <!-- SCROLLABLE LIST (Vertical + Horizontal) -->
-                    <ScrollView
-                        android:id="@+id/scrollLeaderboard"
+                    <!-- SCROLLABLE LIST WITH FIXED HEADER -->
+                    <HorizontalScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        android:background="#1A000000">
-
-                        <HorizontalScrollView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <!-- Header Row -->
                             <LinearLayout
-                                android:id="@+id/leaderboardContainer"
-                                android:orientation="vertical"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="8dp"/>
-                        </HorizontalScrollView>
-                    </ScrollView>
+                                android:orientation="horizontal"
+                                android:background="#33000000"
+                                android:paddingVertical="10dp">
+                                <TextView android:layout_width="45dp" android:layout_height="wrap_content" android:text="#" android:textStyle="bold" android:textColor="#000000" android:gravity="center"/>
+                                <TextView android:layout_width="170dp" android:layout_height="wrap_content" android:text="Потребител" android:textStyle="bold" android:textColor="#000000" android:paddingStart="10dp"/>
+                                <TextView android:layout_width="65dp" android:layout_height="wrap_content" android:text="Точки" android:textStyle="bold" android:textColor="#000000" android:gravity="center"/>
+                                <TextView android:layout_width="65dp" android:layout_height="wrap_content" android:text="Време" android:textStyle="bold" android:textColor="#000000" android:gravity="center"/>
+                            </LinearLayout>
+                            <ScrollView
+                                android:id="@+id/scrollLeaderboard"
+                                android:layout_width="match_parent"
+                                android:layout_height="250dp"
+                                android:background="#12000000">
+                                <LinearLayout
+                                    android:id="@+id/leaderboardContainer"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical" />
+                            </ScrollView>
+                        </LinearLayout>
+                    </HorizontalScrollView>
 
                     <Button
                         android:id="@+id/btnHome"

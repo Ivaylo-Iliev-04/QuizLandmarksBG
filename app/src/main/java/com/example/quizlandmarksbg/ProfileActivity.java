@@ -135,7 +135,7 @@ public class ProfileActivity extends AppCompatActivity {
         for (GameResult gr : resultsList) {
             LinearLayout card = new LinearLayout(this);
             card.setOrientation(LinearLayout.VERTICAL);
-            card.setBackgroundColor(Color.parseColor("#F2FFFFFF")); // 95% непрозрачност
+            card.setBackgroundColor(Color.parseColor("#CCFFFFFF")); // Балансирано (80% непрозрачност)
             card.setPadding(35, 35, 35, 35);
             LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(-1, -2);
             p.setMargins(0, 0, 0, 30); card.setLayoutParams(p);
@@ -150,7 +150,7 @@ public class ProfileActivity extends AppCompatActivity {
             dp.setMargins(0, 10, 0, 10); card.addView(div, dp);
 
             TextView det = new TextView(this);
-            det.setText("🏆 Точки: " + gr.points + "\n⏱️ Време: " + (gr.time / 1000) + " сек.\n📅 " + gr.yearNum + "г., седм. " + gr.weekNum + "\n🏅 Място: #" + gr.rank);
+            det.setText("🏆 Точки: " + gr.points + "\n⏱️ Време: " + (gr.time / 1000) + " секунди\n📅 " + gr.yearNum + " г., седмица: " + gr.weekNum + "\n🏅 Място: #" + gr.rank);
             det.setTextSize(16); det.setTextColor(Color.parseColor("#212121"));
             card.addView(det);
             resultsContainer.addView(card);

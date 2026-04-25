@@ -2,7 +2,9 @@ package com.example.quizlandmarksbg;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -116,19 +118,65 @@ public class LeaderboardActivity extends AppCompatActivity {
     }
 
     private void addRow(LinearLayout container, int rank, String username, long points, long time) {
-        TextView tv = new TextView(this);
-        tv.setText(rank + ". " + username + " - " + points + " т. (" + time / 1000 + "s)");
-        tv.setTextSize(16);
-        tv.setPadding(10, 10, 10, 10);
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setPadding(0, 12, 0, 12);
+        row.setGravity(Gravity.CENTER_VERTICAL);
 
         if (username.equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
-            tv.setTextColor(Color.YELLOW);
-            tv.setBackgroundColor(Color.parseColor("#3300FF00"));
-            currentUserView = tv;
-        } else {
-            tv.setTextColor(Color.BLACK);
+            row.setBackgroundColor(Color.parseColor("#4D00FF00")); 
+            currentUserView = row;
         }
 
-        container.addView(tv);
+        float density = getResources().getDisplayMetrics().density;
+
+        // 1. Rank Column - 45dp
+        TextView tvRank = new TextView(this);
+        tvRank.setLayoutParams(new LinearLayout.LayoutParams((int)(45 * density), -2));
+        tvRank.setGravity(Gravity.CENTER);
+        if (rank == 1) tvRank.setText("🥇");
+        else if (rank == 2) tvRank.setText("🥈");
+        else if (rank == 3) tvRank.setText("🥉");
+        else tvRank.setText(rank + ".");
+        tvRank.setTextColor(Color.BLACK);
+        tvRank.setTextSize(16);
+        tvRank.setTypeface(null, Typeface.BOLD);
+        row.addView(tvRank);
+
+        // 2. User Column - 170dp
+        TextView tvUser = new TextView(this);
+        tvUser.setLayoutParams(new LinearLayout.LayoutParams((int)(170 * density), -2));
+        tvUser.setText(username);
+        tvUser.setTextColor(username.equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()) ? Color.parseColor("#BF9B00") : Color.BLACK);
+        tvUser.setTextSize(16);
+        tvUser.setTypeface(null, Typeface.BOLD);
+        tvUser.setPadding(10, 0, 10, 0);
+        row.addView(tvUser);
+
+        // 3. Points Column - 65dp
+        TextView tvPoints = new TextView(this);
+        tvPoints.setLayoutParams(new LinearLayout.LayoutParams((int)(65 * density), -2));
+        tvPoints.setText(String.valueOf(points));
+        tvPoints.setTextColor(Color.BLACK);
+        tvPoints.setGravity(Gravity.CENTER);
+        tvPoints.setTextSize(16);
+        tvPoints.setTypeface(null, Typeface.BOLD);
+        row.addView(tvPoints);
+
+        // 4. Time Column - 65dp
+        TextView tvTime = new TextView(this);
+        tvTime.setLayoutParams(new LinearLayout.LayoutParams((int)(65 * density), -2));
+        tvTime.setText(time / 1000 + "s");
+        tvTime.setTextColor(Color.BLACK);
+        tvTime.setGravity(Gravity.CENTER);
+        tvTime.setTextSize(16);
+        tvTime.setTypeface(null, Typeface.BOLD);
+        row.addView(tvTime);
+
+        container.addView(row);
+
+        View divider = new View(this);
+        divider.setBackgroundColor(Color.parseColor("#1A000000"));
+        container.addView(divider, new LinearLayout.LayoutParams(-1, 1));
     }
 }
