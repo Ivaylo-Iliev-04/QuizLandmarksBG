@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/login_background" />
+        android:src="@drawable/profile_background" />
 
     <!-- DARK OVERLAY -->
     <View
@@ -154,8 +154,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="📜 История на игрите"
-                android:textSize="22sp"
+                android:text="📜 История на състезателните игри"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
                 android:layout_marginBottom="16dp"
