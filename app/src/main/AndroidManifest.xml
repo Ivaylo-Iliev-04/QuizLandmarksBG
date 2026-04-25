@@ -21,6 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuizLandmarksBG">
         <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".GlobalLeaderboardActivity"
             android:exported="false" />
         <activity

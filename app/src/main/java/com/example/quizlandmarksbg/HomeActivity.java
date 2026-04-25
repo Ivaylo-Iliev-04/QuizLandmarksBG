@@ -85,17 +85,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         btnInfo.setOnClickListener(v -> {
-            new AlertDialog.Builder(this)
-                    .setTitle("Как се играе?")
-                    .setMessage("Ако искате да играете състезателна игра натиснете бутона 'Състезаниe' " +
-                            "и премерете сили с други играчи. Този вид игра използва вашето местоположение, " +
-                            "за да определи в кой град се намирате, и имате само един опит за отговаряне на " +
-                            "въпросите за 90 секунди. Ако искате просто да се забавлявате, изберете град и " +
-                            "натиснете бутона 'Играй', за да играете обикновена игра. Ако искате да видите " +
-                            "седмичното класиране за конкретен град или генералното класиране натиснете бутона " +
-                            "'Класиране'. Приятна игра!" )
-                    .setPositiveButton("OK", null)
-                    .show();
+            startActivity(new Intent(this, ProfileActivity.class));
         });
         List<String> cityList = new ArrayList<>();
         db.collection("cities")
