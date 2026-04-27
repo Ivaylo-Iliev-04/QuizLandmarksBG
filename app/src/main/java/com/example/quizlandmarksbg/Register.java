@@ -118,8 +118,8 @@ public class Register extends AppCompatActivity {
         int age;
         try {
             age = Integer.parseInt(ageStr);
-        } catch (Exception e) {
-            etAge.setError("Невалидна възраст!");
+        } catch (NumberFormatException e) {
+            etAge.setError("Невалидна възраст! Въведете число.");
             return;
         }
         if (age < 12 || age > 100) {

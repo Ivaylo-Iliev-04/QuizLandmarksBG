@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,11 +62,15 @@ public class NormalQuiz extends AppCompatActivity {
                 .addOnSuccessListener(query -> {
                     int index = 0;
                     for (DocumentSnapshot doc : query) {
-                        QuestionModel q = doc.toObject(QuestionModel.class);
-                        if (q != null) {
-                            questionList.add(q);
-                            addQuestionToUI(q, index);
-                            index++;
+                        try {
+                            QuestionModel q = doc.toObject(QuestionModel.class);
+                            if (q != null) {
+                                questionList.add(q);
+                                addQuestionToUI(q, index);
+                                index++;
+                            }
+                        } catch (RuntimeException e) {
+                            e.printStackTrace();
                         }
                     }
                 });
@@ -107,17 +112,21 @@ public class NormalQuiz extends AppCompatActivity {
         correctAnswers = 0;
         reviewList.clear();
         for (int i = 0; i < questionList.size(); i++) {
-            QuestionModel q = questionList.get(i);
-            RadioGroup rg = answersMap.get(i);
-            int selectedId = rg.getCheckedRadioButtonId();
-            String correctAnswer = q.correctAnswer;
-            reviewList.add((i + 1) + ". " + q.question + "\n✔ Верен отговор: " + correctAnswer);
-            if (selectedId != -1) {
-                RadioButton selected = findViewById(selectedId);
-                if (selected.getText().toString().equals(correctAnswer)) {
-                    totalPoints += q.points;
-                    correctAnswers++;
+            try {
+                QuestionModel q = questionList.get(i);
+                RadioGroup rg = answersMap.get(i);
+                int selectedId = rg.getCheckedRadioButtonId();
+                String correctAnswer = q.correctAnswer;
+                reviewList.add((i + 1) + ". " + q.question + "\n✔ Верен отговор: " + correctAnswer);
+                if (selectedId != -1) {
+                    RadioButton selected = findViewById(selectedId);
+                    if (selected != null && selected.getText().toString().equals(correctAnswer)) {
+                        totalPoints += q.points;
+                        correctAnswers++;
+                    }
                 }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
         }
         Intent intent = new Intent(this, NormalResultActivity.class);

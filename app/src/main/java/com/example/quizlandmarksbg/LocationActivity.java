@@ -133,7 +133,7 @@ public class LocationActivity extends AppCompatActivity {
                     ResolvableApiException resolvable = (ResolvableApiException) e;
                     resolvable.startResolutionForResult(LocationActivity.this, REQUEST_CHECK_SETTINGS);
                 } catch (IntentSender.SendIntentException sendEx) {
-                    // Ignore the error.
+                    //sendEx.printStackTrace();
                 }
             }
         });

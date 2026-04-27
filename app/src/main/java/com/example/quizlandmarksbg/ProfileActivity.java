@@ -46,7 +46,10 @@ public class ProfileActivity extends AppCompatActivity {
                 String[] parts = week.split("_");
                 yearNum = Integer.parseInt(parts[0]);
                 weekNum = Integer.parseInt(parts[1]);
-            } catch (Exception e) { yearNum = weekNum = 0; }
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                yearNum = 0; 
+                weekNum = 0; 
+            }
         }
     }
 
