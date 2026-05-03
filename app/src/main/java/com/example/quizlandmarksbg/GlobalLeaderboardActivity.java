@@ -72,11 +72,7 @@ public class GlobalLeaderboardActivity extends AppCompatActivity {
                     for (DocumentSnapshot doc : query) {
                         cityList.add(doc.getId());
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                            this,
-                            android.R.layout.simple_spinner_item,
-                            cityList
-                    );
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cityList);
                     spinnerCities.setAdapter(adapter);
                 });
     }
@@ -188,15 +184,17 @@ public class GlobalLeaderboardActivity extends AppCompatActivity {
         row.setPadding(0, 12, 0, 12);
         row.setGravity(Gravity.CENTER_VERTICAL);
 
-        // Акцентиране на текущия потребител
         if (username.equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
-            row.setBackgroundColor(Color.parseColor("#4D00FF00")); // Светло зелено
-            if (isGlobal) currentUserViewGlobal = row; else currentUserViewWeekly = row;
+            row.setBackgroundColor(Color.parseColor("#4D00FF00"));
+            if (isGlobal) {
+                currentUserViewGlobal = row;
+            } else{
+                currentUserViewWeekly = row;
+            }
         }
 
         float density = getResources().getDisplayMetrics().density;
 
-        // 1. Колона за Ранг (с медали)
         TextView tvRank = new TextView(this);
         tvRank.setLayoutParams(new LinearLayout.LayoutParams((int)(45 * density), -2));
         tvRank.setGravity(Gravity.CENTER);
@@ -209,7 +207,6 @@ public class GlobalLeaderboardActivity extends AppCompatActivity {
         tvRank.setTypeface(null, Typeface.BOLD);
         row.addView(tvRank);
 
-        // 2. Колона за Потребител
         TextView tvUser = new TextView(this);
         tvUser.setLayoutParams(new LinearLayout.LayoutParams((int)(170 * density), -2));
         tvUser.setText(username);
@@ -219,7 +216,6 @@ public class GlobalLeaderboardActivity extends AppCompatActivity {
         tvUser.setPadding(10, 0, 10, 0);
         row.addView(tvUser);
 
-        // 3. Колона за Точки
         TextView tvPoints = new TextView(this);
         tvPoints.setLayoutParams(new LinearLayout.LayoutParams((int)(65 * density), -2));
         tvPoints.setText(String.valueOf(points));
@@ -229,7 +225,6 @@ public class GlobalLeaderboardActivity extends AppCompatActivity {
         tvPoints.setTypeface(null, Typeface.BOLD);
         row.addView(tvPoints);
 
-        // 4. Колона за Време
         TextView tvTime = new TextView(this);
         tvTime.setLayoutParams(new LinearLayout.LayoutParams((int)(65 * density), -2));
         tvTime.setText(time / 1000 + "s");
@@ -241,7 +236,6 @@ public class GlobalLeaderboardActivity extends AppCompatActivity {
 
         container.addView(row);
 
-        // Тънка разделителна линия
         View divider = new View(this);
         divider.setBackgroundColor(Color.parseColor("#1A000000"));
         container.addView(divider, new LinearLayout.LayoutParams(-1, 1));

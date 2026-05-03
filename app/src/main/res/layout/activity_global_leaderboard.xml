@@ -68,7 +68,6 @@
                         android:textColor="#000000"
                         android:layout_marginBottom="8dp"/>
 
-                    <!-- SCROLL GLOBAL WITH FIXED HEADER -->
                     <HorizontalScrollView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -76,17 +75,39 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
-                            <!-- Header Row -->
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 android:background="#33000000"
                                 android:paddingVertical="10dp">
-                                <TextView android:layout_width="45dp" android:layout_height="wrap_content" android:text="#" android:textStyle="bold" android:textColor="#000000" android:gravity="center"/>
-                                <TextView android:layout_width="170dp" android:layout_height="wrap_content" android:text="Потребител" android:textStyle="bold" android:textColor="#000000" android:paddingStart="10dp"/>
-                                <TextView android:layout_width="65dp" android:layout_height="wrap_content" android:text="Точки" android:textStyle="bold" android:textColor="#000000" android:gravity="center"/>
-                                <TextView android:layout_width="65dp" android:layout_height="wrap_content" android:text="Време" android:textStyle="bold" android:textColor="#000000" android:gravity="center"/>
+                                <TextView
+                                    android:layout_width="45dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="#" android:textStyle="bold"
+                                    android:textColor="#000000"
+                                    android:gravity="center"/>
+                                <TextView
+                                    android:layout_width="170dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Потребител"
+                                    android:textStyle="bold"
+                                    android:textColor="#000000"
+                                    android:paddingStart="10dp"/>
+                                <TextView
+                                    android:layout_width="65dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Точки"
+                                    android:textStyle="bold"
+                                    android:textColor="#000000"
+                                    android:gravity="center"/>
+                                <TextView
+                                    android:layout_width="65dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Време"
+                                    android:textStyle="bold"
+                                    android:textColor="#000000"
+                                    android:gravity="center"/>
                             </LinearLayout>
                             <ScrollView
                                 android:id="@+id/scrollGlobal"
@@ -151,8 +172,6 @@
                             app:cornerRadius="8dp"
                             app:backgroundTint="#2196F3"/>
                     </LinearLayout>
-
-                    <!-- SCROLL WEEKLY WITH FIXED HEADER -->
                     <HorizontalScrollView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -160,17 +179,39 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
-                            <!-- Header Row -->
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 android:background="#33000000"
                                 android:paddingVertical="10dp">
-                                <TextView android:layout_width="45dp" android:layout_height="wrap_content" android:text="#" android:textStyle="bold" android:textColor="#000000" android:gravity="center"/>
-                                <TextView android:layout_width="170dp" android:layout_height="wrap_content" android:text="Потребител" android:textStyle="bold" android:textColor="#000000" android:paddingStart="10dp"/>
-                                <TextView android:layout_width="65dp" android:layout_height="wrap_content" android:text="Точки" android:textStyle="bold" android:textColor="#000000" android:gravity="center"/>
-                                <TextView android:layout_width="65dp" android:layout_height="wrap_content" android:text="Време" android:textStyle="bold" android:textColor="#000000" android:gravity="center"/>
+                                <TextView
+                                    android:layout_width="45dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="#" android:textStyle="bold"
+                                    android:textColor="#000000"
+                                    android:gravity="center"/>
+                                <TextView
+                                    android:layout_width="170dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Потребител"
+                                    android:textStyle="bold"
+                                    android:textColor="#000000"
+                                    android:paddingStart="10dp"/>
+                                <TextView
+                                    android:layout_width="65dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Точки"
+                                    android:textStyle="bold"
+                                    android:textColor="#000000"
+                                    android:gravity="center"/>
+                                <TextView
+                                    android:layout_width="65dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Време"
+                                    android:textStyle="bold"
+                                    android:textColor="#000000"
+                                    android:gravity="center"/>
                             </LinearLayout>
                             <ScrollView
                                 android:id="@+id/scrollWeekly"

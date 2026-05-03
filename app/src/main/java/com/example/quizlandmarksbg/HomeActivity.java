@@ -39,25 +39,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        /*db.collection("leaderboards")
-                .document("Stara Zagora")
-                .collection("results")
-                .get()
-                .addOnSuccessListener(query -> {
-
-                    for (DocumentSnapshot doc : query) {
-
-                        Map<String, Object> data = doc.getData();
-
-                        db.collection("leaderboards")
-                                .document("Стара Загора")
-                                .collection("results")
-                                .add(data);
-                    }
-
-                    Toast.makeText(this, "Копирано!", Toast.LENGTH_LONG).show();
-                });*/
-
         tvWelcome = findViewById(R.id.tvWelcome);
         btnLogout = findViewById(R.id.btnLogout);
         btnInfo = findViewById(R.id.btnInfo);

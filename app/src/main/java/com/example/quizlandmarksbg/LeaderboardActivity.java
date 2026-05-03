@@ -130,7 +130,6 @@ public class LeaderboardActivity extends AppCompatActivity {
 
         float density = getResources().getDisplayMetrics().density;
 
-        // 1. Rank Column - 45dp
         TextView tvRank = new TextView(this);
         tvRank.setLayoutParams(new LinearLayout.LayoutParams((int)(45 * density), -2));
         tvRank.setGravity(Gravity.CENTER);
@@ -143,7 +142,6 @@ public class LeaderboardActivity extends AppCompatActivity {
         tvRank.setTypeface(null, Typeface.BOLD);
         row.addView(tvRank);
 
-        // 2. User Column - 170dp
         TextView tvUser = new TextView(this);
         tvUser.setLayoutParams(new LinearLayout.LayoutParams((int)(170 * density), -2));
         tvUser.setText(username);
@@ -153,7 +151,6 @@ public class LeaderboardActivity extends AppCompatActivity {
         tvUser.setPadding(10, 0, 10, 0);
         row.addView(tvUser);
 
-        // 3. Points Column - 65dp
         TextView tvPoints = new TextView(this);
         tvPoints.setLayoutParams(new LinearLayout.LayoutParams((int)(65 * density), -2));
         tvPoints.setText(String.valueOf(points));
@@ -163,7 +160,6 @@ public class LeaderboardActivity extends AppCompatActivity {
         tvPoints.setTypeface(null, Typeface.BOLD);
         row.addView(tvPoints);
 
-        // 4. Time Column - 65dp
         TextView tvTime = new TextView(this);
         tvTime.setLayoutParams(new LinearLayout.LayoutParams((int)(65 * density), -2));
         tvTime.setText(time / 1000 + "s");

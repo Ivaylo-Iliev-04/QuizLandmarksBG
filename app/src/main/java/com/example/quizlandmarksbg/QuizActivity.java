@@ -36,7 +36,7 @@ public class QuizActivity extends AppCompatActivity {
     int totalPoints = 0;
     TextView tvTimer;
     CountDownTimer timer;
-    long timeLeft = 90000; // 90 секунди
+    long timeLeft = 90000;// 90 секунди
     long startTime;
 
     @Override
@@ -158,11 +158,6 @@ public class QuizActivity extends AppCompatActivity {
         long endTime = System.currentTimeMillis();
         long timeTaken = endTime - startTime;
         String city = getIntent().getStringExtra("city");
-        Intent intent = new Intent(this, LeaderboardActivity.class);
-        intent.putExtra("username", getIntent().getStringExtra("username"));
-        intent.putExtra("city", city);
-        intent.putExtra("points", totalPoints);
-        intent.putExtra("time", timeTaken);
         saveResult(city, totalPoints, timeTaken);
         Toast.makeText(this, "Вашите точки: " + totalPoints, Toast.LENGTH_LONG).show();
     }

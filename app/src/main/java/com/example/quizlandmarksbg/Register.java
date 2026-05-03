@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.activity.EdgeToEdge;
@@ -59,23 +61,28 @@ public class Register extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        String uid = mAuth.getCurrentUser().getUid();
-                        Map<String, Object> user = new HashMap<>();
-                        user.put("username", username);
-                        user.put("email", email);
-                        user.put("age", age);
-                        user.put("gender", gender);
+                        FirebaseUser userAuth = mAuth.getCurrentUser();
+                        if (userAuth != null) {
+                            userAuth.reload().addOnCompleteListener(t -> {
+                            String uid = mAuth.getCurrentUser().getUid();
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("username", username);
+                            user.put("email", email);
+                            user.put("age", age);
+                            user.put("gender", gender);
 
-                        db.collection("users")
+                            db.collection("users")
                                 .document(uid)
                                 .set(user)
                                 .addOnSuccessListener(aVoid -> {
                                     Toast.makeText(this, "Успешна регистрация!", Toast.LENGTH_SHORT).show();
                                     finish();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(this, "Грешка: " + e.getMessage(), Toast.LENGTH_LONG).show();
                                 });
-
-                    }else {
-                        Toast.makeText(this, "Грешка: "+task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            });
+                        }
                     }
                 });
     }
@@ -85,28 +92,28 @@ public class Register extends AppCompatActivity {
         String password = etPassword.getText().toString();
         String repeatPassword = etRepeatPassword.getText().toString();
         String ageStr = etAge.getText().toString();
-        // USERNAME
+
         if (username.length() < 2 || username.length() > 7) {
             etUsername.setError("Потребителското име трябва да е между 2 и 7 символа!");
             return;
         }
-        // EMAIL
+
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             etEmail.setError("Невалиден email!");
             return;
         }
-        // PASSWORD
+
         if (!password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$")) {
             etPassword.setError("Паролата трябва да е поне 8 символа и да съдържа поне една цифра, " +
                     "една малка буква(a-z), една голяма буква(A-Z) и един от следните символи: @#$%^&+=!");
             return;
         }
-        // REPEAT PASSWORD
+
         if (!password.equals(repeatPassword)) {
             etRepeatPassword.setError("Паролите не съвпадат!");
             return;
         }
-        // GENDER
+
         int selectedId = rgGender.getCheckedRadioButtonId();
         if (selectedId == -1) {
             Toast.makeText(this, "Изберeте пол!", Toast.LENGTH_SHORT).show();
@@ -114,7 +121,7 @@ public class Register extends AppCompatActivity {
         }
         RadioButton selectedRadio = findViewById(selectedId);
         String gender = selectedRadio.getText().toString();
-        // AGE
+
         int age;
         try {
             age = Integer.parseInt(ageStr);
@@ -126,7 +133,6 @@ public class Register extends AppCompatActivity {
             etAge.setError("Възрастта трябва да е между 12 и 100 години");
             return;
         }
-        // ПРОВЕРКА ЗА USERNAME В FIRESTORE
         db.collection("users")
                 .whereEqualTo("username", username)
                 .get()
@@ -135,7 +141,6 @@ public class Register extends AppCompatActivity {
                         etUsername.setError("Потребителското име вече съществува");
                         return;
                     }
-                    // ако е уникален → регистрираме
                     registerWithFirebase(email, password, username, age, gender);
                 });
     }

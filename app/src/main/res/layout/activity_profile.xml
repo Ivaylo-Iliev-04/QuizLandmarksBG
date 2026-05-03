@@ -7,14 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".ProfileActivity">
 
-    <!-- BACKGROUND -->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/profile_background" />
 
-    <!-- DARK OVERLAY -->
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,7 +29,6 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <!-- 🏠 ЗАГЛАВИЕ -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -48,7 +45,6 @@
                 android:shadowRadius="4"
                 android:letterSpacing="0.05"/>
 
-            <!-- 👤 USER DATA CONTAINER - LESS TRANSPARENT (F2 = 95%) -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -150,7 +146,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 📜 HISTORY SECTION -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

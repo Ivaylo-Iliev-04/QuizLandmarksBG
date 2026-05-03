@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            // вече е логнат => директно към Home
             startActivity(new Intent(this, HomeActivity.class));
             finish();
         }
@@ -67,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         String uid = mAuth.getCurrentUser().getUid();
-                        // взимаме user данните от Firestore
                         db.collection("users")
                                 .document(uid)
                                 .get()
@@ -75,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
                                     if (documentSnapshot.exists()) {
                                         String username = documentSnapshot.getString("username");
                                         Toast.makeText(this, "Добре дошли, " + username, Toast.LENGTH_SHORT).show();
-                                        //отиваме към Home screen
                                         Intent intent = new Intent(this, HomeActivity.class);
                                         intent.putExtra("username", username);
                                         startActivity(intent);

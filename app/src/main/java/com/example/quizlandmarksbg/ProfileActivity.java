@@ -27,21 +27,21 @@ public class ProfileActivity extends AppCompatActivity {
     TextView tvUsername, tvEmail, tvAge, tvGender;
     LinearLayout resultsContainer;
     Button btnBack;
-
     FirebaseFirestore db;
     FirebaseAuth mAuth;
-
     String currentEmail;
     String currentUid;
 
-    // Помощен клас за сортиране
     private static class GameResult {
         String city, week;
         long points, time;
         int rank, yearNum, weekNum;
 
         GameResult(String city, long points, long time, String week) {
-            this.city = city; this.points = points; this.time = time; this.week = week;
+            this.city = city;
+            this.points = points;
+            this.time = time;
+            this.week = week;
             try {
                 String[] parts = week.split("_");
                 yearNum = Integer.parseInt(parts[0]);
@@ -77,7 +77,9 @@ public class ProfileActivity extends AppCompatActivity {
             currentUid = mAuth.getCurrentUser().getUid();
             loadUserData();
             loadAllResults();
-        } else { finish(); }
+        } else {
+            finish();
+        }
 
         btnBack.setOnClickListener(v -> finish());
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -88,44 +90,59 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void loadUserData() {
-        db.collection("users").document(currentUid).get().addOnSuccessListener(doc -> {
-            if (doc.exists()) {
-                tvUsername.setText("Потребител: " + doc.getString("username"));
-                tvEmail.setText("Email: " + doc.getString("email"));
-                tvAge.setText("Възраст: " + doc.getLong("age"));
-                tvGender.setText("Пол: " + doc.getString("gender"));
-            }
-        });
+        db.collection("users")
+                .document(currentUid)
+                .get()
+                .addOnSuccessListener(doc -> {
+                if (doc.exists()) {
+                    tvUsername.setText("Потребител: " + doc.getString("username"));
+                    tvEmail.setText("Email: " + doc.getString("email"));
+                    tvAge.setText("Възраст: " + doc.getLong("age"));
+                    tvGender.setText("Пол: " + doc.getString("gender"));
+                }
+                });
     }
 
     private void loadAllResults() {
         resultsList.clear();
-        db.collection("leaderboards").get().addOnSuccessListener(cityDocs -> {
-            for (DocumentSnapshot cityDoc : cityDocs) {
-                String cityName = cityDoc.getId();
-                db.collection("leaderboards").document(cityName).collection("results")
-                        .whereEqualTo("username", currentEmail).get().addOnSuccessListener(results -> {
-                    for (DocumentSnapshot doc : results) {
-                        fetchRankAndStore(new GameResult(cityName, doc.getLong("points"), doc.getLong("time"), doc.getString("week")));
-                    }
-                });
-            }
+        db.collection("leaderboards")
+                .get()
+                .addOnSuccessListener(cityDocs -> {
+                for (DocumentSnapshot cityDoc : cityDocs) {
+                    String cityName = cityDoc.getId();
+                    db.collection("leaderboards")
+                            .document(cityName)
+                            .collection("results")
+                            .whereEqualTo("username", currentEmail)
+                            .get()
+                            .addOnSuccessListener(results -> {
+                            for (DocumentSnapshot doc : results) {
+                                fetchRankAndStore(new GameResult(cityName, doc.getLong("points"), doc.getLong("time"), doc.getString("week")));
+                            }
+                    });
+                }
         });
     }
 
     private void fetchRankAndStore(GameResult gr) {
         activeTasks++;
-        db.collection("leaderboards").document(gr.city).collection("results")
-                .whereEqualTo("week", gr.week).orderBy("points", Query.Direction.DESCENDING)
-                .orderBy("time", Query.Direction.ASCENDING).get().addOnSuccessListener(query -> {
-            int rank = 1;
-            for (DocumentSnapshot doc : query) {
-                if (doc.getString("username").equals(currentEmail) && doc.getLong("points") == gr.points && doc.getLong("time") == gr.time) break;
-                rank++;
-            }
-            gr.rank = rank; resultsList.add(gr); activeTasks--;
-            if (activeTasks == 0) displayResults();
-        });
+        db.collection("leaderboards")
+                .document(gr.city)
+                .collection("results")
+                .whereEqualTo("week", gr.week)
+                .orderBy("points", Query.Direction.DESCENDING)
+                .orderBy("time", Query.Direction.ASCENDING)
+                .get().addOnSuccessListener(query -> {
+                    int rank = 1;
+                    for (DocumentSnapshot doc : query) {
+                        if (doc.getString("username").equals(currentEmail) && doc.getLong("points") == gr.points && doc.getLong("time") == gr.time) break;
+                            rank++;
+                    }
+                    gr.rank = rank;
+                    resultsList.add(gr);
+                    activeTasks--;
+                    if (activeTasks == 0) displayResults();
+                });
     }
 
     private void displayResults() {
@@ -138,23 +155,28 @@ public class ProfileActivity extends AppCompatActivity {
         for (GameResult gr : resultsList) {
             LinearLayout card = new LinearLayout(this);
             card.setOrientation(LinearLayout.VERTICAL);
-            card.setBackgroundColor(Color.parseColor("#CCFFFFFF")); // Балансирано (80% непрозрачност)
+            card.setBackgroundColor(Color.parseColor("#CCFFFFFF"));
             card.setPadding(35, 35, 35, 35);
             LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(-1, -2);
-            p.setMargins(0, 0, 0, 30); card.setLayoutParams(p);
+            p.setMargins(0, 0, 0, 30);
+            card.setLayoutParams(p);
 
             TextView title = new TextView(this);
-            title.setText("📍 " + gr.city); title.setTextSize(20);
-            title.setTypeface(null, Typeface.BOLD); title.setTextColor(Color.BLACK);
+            title.setText("📍 " + gr.city);
+            title.setTextSize(20);
+            title.setTypeface(null, Typeface.BOLD);
+            title.setTextColor(Color.BLACK);
             card.addView(title);
 
             View div = new View(this); div.setBackgroundColor(Color.LTGRAY);
             LinearLayout.LayoutParams dp = new LinearLayout.LayoutParams(-1, 2);
-            dp.setMargins(0, 10, 0, 10); card.addView(div, dp);
+            dp.setMargins(0, 10, 0, 10);
+            card.addView(div, dp);
 
             TextView det = new TextView(this);
             det.setText("🏆 Точки: " + gr.points + "\n⏱️ Време: " + (gr.time / 1000) + " секунди\n📅 " + gr.yearNum + " г., седмица: " + gr.weekNum + "\n🏅 Място: #" + gr.rank);
-            det.setTextSize(16); det.setTextColor(Color.parseColor("#212121"));
+            det.setTextSize(16);
+            det.setTextColor(Color.parseColor("#212121"));
             card.addView(det);
             resultsContainer.addView(card);
         }
